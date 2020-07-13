@@ -23,6 +23,40 @@ url_temporada = link_alternar_temporadas[0]
 r = requests.get(url_temporada)
 soup = BeautifulSoup(r.content, 'html.parser')
 
+#link da primeira página
+link_ver_jogos = url_temporada + '/all-games'
+r = requests.get(link_ver_jogos)
+soup = BeautifulSoup(r.content, 'html.parser')
+
+#identifica quantidade de páginas a percorrer
+qnt_paginas = soup.find('div', class_="pagination")
+if(not qnt_paginas):
+    qnt_paginas = 1
+else:
+    qnt_paginas = qnt_paginas.ul.find_all('li')
+    qnt_paginas = len(qnt_paginas) - 2
+
+#guarda o link das páginas com os jogos
+link_paginas_jogos = []
+link_paginas_jogos.append(link_ver_jogos)
+
+#manipulação para a criação da url da página que exibe os jogos
+for i in range(2, qnt_paginas + 1, 1):
+    url = link_ver_jogos + '/page/' + str(i)
+    link_paginas_jogos.append(url)
+    
+
+
+
+
+
+
+
+
+
+
+'''
+
 rodada_dados = soup.find('tr', class_="competition-tr-title")
 
 #Captura o link para alternar entre as rodadas
@@ -45,15 +79,22 @@ soup = BeautifulSoup(r.content, 'html.parser')
 jogos = soup.find('table', class_="competition-rounds").find_all('tr')
 link_jogos = []
 
-##Ao verificar se existe dados do jogo pra capturar, verificar se existe ficha, e caso exista ficha verificar se tem placar
+
+##Ao verificar se existe dados do jogo pra capturar, verificar se existe ficha, verificar se existe se jogo foi adiado (pois nesses jogos existe ficha), verificar se jogo está em andamento
 for jogo in jogos:
-    ficha = jogo.find(class_="aa-icon-player")
-    if(ficha): #existe ficha do jogo
-        link = jogo.find_all('td')[6].find('a')['href']
+    ficha = jogo.find(class_="aa-icon-player") #icone de ficha do jogo
+
+    placar_info = jogo.find_all('td')[3]
+    placar = placar_info.text.strip() #placar do jogo
+    em_andamento = placar_info['class'] #vetor com as classes de placar
+    
+    if((ficha) and (placar != 'Postponed') and ('gameinlive' not in em_andamento)): #existe ficha do jogo, jogo não foi adiado, jogo não está em andamento
+        link = jogo.find_all('td')[6].find('a')['href'] #posição 6 pois sempre é o sexta coluna(td) dentro da linha(tr)
         link_jogos.append(link)
 
-print(link_jogos)
-
+#Jogo (FAZER UM FOR PARA PERCORRER OS JOGOS)
+jogo = link_jogos[0]
+'''
 
 
 
