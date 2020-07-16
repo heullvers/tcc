@@ -54,6 +54,14 @@ def qnt_gols_exatos(matriz):
     else:
         return maior_pos
 
+def ambas_marcam(matriz):
+    ambas_marcam = 0
+    for i in range(len(matriz)):
+        for j in range(len(matriz[i])):
+            if((i != 0) and (j != 0)):
+                ambas_marcam += matriz[i][j]
+    return round(ambas_marcam,2)
+
 def imprimirMatriz(matriz):
     for linha in matriz:
         for elemento in linha:
@@ -82,6 +90,7 @@ lista4 = [0.78, 0.83, 0.89, 0.61, 0.83, 1.17, 0.89, 1.33, 1.17, 1.22] #media gol
 
 resultados = []
 gols_exatos = []
+ambas_equipes_marcam = []
 
 for i in range(10):
     
@@ -130,19 +139,25 @@ for i in range(10):
         matriz.append(linha)
 
     
+
+
+
     
+
 
 
 
 
     resultado = resultado_final(matriz)
     gol_exato = qnt_gols_exatos(matriz)
+    ambas_mar = ambas_marcam(matriz)
     resultados.append(resultado)
     gols_exatos.append(gol_exato)
+    ambas_equipes_marcam.append(ambas_mar)
 
-
-print(resultados)
-print(gols_exatos)
+#print(resultados)
+#print(gols_exatos)
+print(ambas_equipes_marcam)
 
 
         
