@@ -18,6 +18,8 @@ def resultado_final(matriz):
             else: #visitante ganhar
                 probabilidades[2] += matriz[i][j]
 
+
+    
     maior = max(probabilidades)
     maior_pos = probabilidades.index(maior)
 
@@ -27,6 +29,20 @@ def resultado_final(matriz):
         return 'Mandante'
     else:
         return 'Visitante'
+    
+
+
+
+    ########
+    #probabilidade_empate = probabilidades[0]
+    #probabilidade_mandante_vencer = probabilidades[1]
+
+    #return [probabilidade_empate, probabilidade_mandante_vencer]
+
+    #########
+    #return probabilidades
+
+    #########
 
 def qnt_gols_exatos(matriz):
     probabilidades = [0,0,0,0,0,0] #gols exatos, 0, 1, 2, 3, 4, mais que 4 gols
@@ -83,10 +99,27 @@ media_gols_sofridos_mandante_liga = media_gols_feitos_visitante_liga
 media_gols_sofridos_visitante_liga = media_gols_feitos_mandante_liga
 
 ###partida analisada
+
+##RODADA 38
+'''
 lista1 = [1.44, 0.72, 1.33, 1.33, 2.22, 1.06, 1, 0.56, 1.56, 0.89] #media gols feitos em casa pelo mandante
 lista2 = [1.33, 1.06, 1.28, 1.67, 0.83, 1.61, 1.44, 1.17, 1, 0.94] #media gols sofridos fora pelo visitante
 lista3 = [0.89, 1.06, 1.06, 1, 1.67, 0.78, 0.67, 1.39, 1.33, 0.78] #media gols feitos fora visitante
 lista4 = [0.78, 0.83, 0.89, 0.61, 0.83, 1.17, 0.89, 1.33, 1.17, 1.22] #media gols sofridos em casa pelo mandante
+'''
+##RODADA 37
+'''
+lista1 = [1.39, 1.44, 1.28, 0.72, 1.17, 1, 2, 1.94, 1.28, 2.78] #media gols feitos em casa pelo mandante
+lista2 = [0.94, 1.44, 1.17, 1.72, 1.22, 1.78, 1.5, 2, 1.22, 1.78] #media gols sofridos fora pelo visitante
+lista3 = [0.89, 0.67, 0.89, 0.39, 0.83, 1.33, 0.78, 0.78, 1, 0.39] #media gols feitos fora visitante
+lista4 = [0.61, 1.28, 0.72, 1.22, 0.61, 0.83, 1, 0.67, 0.94, 0.94] #media gols sofridos em casa pelo mandante
+'''
+##RODADA 36
+lista1 = [1.29, 1.06, 2, 0.53, 1.59, 1.41, 0.88, 1.94, 2.24, 1.06] #media gols feitos em casa pelo mandante
+lista2 = [1.18, 1.29, 0.82, 1.71, 1.82, 1.12, 1.29, 0.82, 1.59, 1.53] #media gols sofridos fora pelo visitante
+lista3 = [1.41, 0.82, 1.59, 1, 1.29, 0.88, 1, 0.82, 0.82, 0.82 ] #media gols feitos fora visitante
+lista4 = [0.71, 0.88, 0.53, 1.35, 1.12, 1.29, 1.18, 1.06, 0.88, 1.24] #media gols sofridos em casa pelo mandante
+
 
 resultados = []
 gols_exatos = []
@@ -110,6 +143,7 @@ for i in range(10):
     media_gols_sofridos_mandante = lista4[i] #0.83 #media gols sofridos em casa pelo mandante
     #capacidade defensiva do mandante
     capacidade_defensiva_mandante = media_gols_sofridos_mandante/media_gols_sofridos_mandante_liga
+
 
     ##Gols feitos pelo mandante
     qnt_gols_predita_mandante = capacidade_ofensiva_mandante * capacidade_defensiva_visitante * media_gols_feitos_mandante_liga
@@ -138,26 +172,22 @@ for i in range(10):
             linha.append(probabilidade)
         matriz.append(linha)
 
-    
-
-
-
-    
-
-
-
-
+    #imprimirMatriz(matriz)
 
     resultado = resultado_final(matriz)
-    gol_exato = qnt_gols_exatos(matriz)
-    ambas_mar = ambas_marcam(matriz)
+    prob_empate = resultado[0]
+    prob_mandante_vencer = resultado[1]
     resultados.append(resultado)
+
+    gol_exato = qnt_gols_exatos(matriz)
     gols_exatos.append(gol_exato)
+
+    ambas_mar = ambas_marcam(matriz)
     ambas_equipes_marcam.append(ambas_mar)
 
-#print(resultados)
-#print(gols_exatos)
-print(ambas_equipes_marcam)
+print('RESULTADOS', resultados)
+print('GOLS EXATOS',gols_exatos)
+print('AMBAS MARCAM',ambas_equipes_marcam)
 
 
         
