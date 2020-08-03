@@ -66,7 +66,7 @@ def qnt_gols_exatos(matriz):
     maior_pos = probabilidades.index(maior)
 
     if(maior_pos == 5):
-        return '4 ou mais'
+        return '5 ou mais'
     else:
         return maior_pos
 
