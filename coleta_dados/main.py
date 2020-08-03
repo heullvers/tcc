@@ -19,14 +19,15 @@ jogos = identificar_jogos(temporadas[0]) ##recebe um array com o link para cada 
 #jogo = jogos[360] #dois vermelhos
 
 jogo = 'https://www.academiadasapostasbrasil.com/stats/match/inglaterra/barclays-premier-league/norwich-city/burnley/3029438/live'
-jogo_segundo_amarelo = 'https://www.academiadasapostasbrasil.com/stats/match/inglaterra/barclays-premier-league/wolverhampton/leicester-city/3029332/live'
-jogo_3 = 'https://www.academiadasapostasbrasil.com/stats/match/alemanha/bundesliga/borussia-dortmund/hoffenheim/3047317/live'
+#jogo_segundo_amarelo = 'https://www.academiadasapostasbrasil.com/stats/match/inglaterra/barclays-premier-league/wolverhampton/leicester-city/3029332/live'
+#jogo_3 = 'https://www.academiadasapostasbrasil.com/stats/match/alemanha/bundesliga/borussia-dortmund/hoffenheim/3047317/live'
 
 r = requests.get(jogo)
 soup = BeautifulSoup(r.content, 'html.parser')
 
 ##VARIÁVEL
 #--------------------
+#nome do campeonato disputado
 nome_campeonato = soup.find('td', class_="stats-game-head-date").find_all('li')[4].text.strip()
 #--------------------
 
@@ -67,6 +68,13 @@ expulsoes_verificar_cartao = sorted(expulsoes, key=lambda x:x[0])
 for i in range(8 - len(expulsoes_verificar_cartao)):
     expulsoes_verificar_cartao.append([None, None])
 
+
+#VARIÁVEL
+#--------------------
+#número de expulsões durante o jogo
+quantidade_expulsoes = len(minutos_expulsoes)
+#--------------------
+
 ##VARIÁVEIS
 #--------------------
 #quem tomou o cartão (mandante ou visitante)
@@ -92,10 +100,24 @@ placar_expulsao_seis = placares_no_momento_da_expulsao[5]
 placar_expulsao_sete = placares_no_momento_da_expulsao[6]
 placar_expulsao_oito = placares_no_momento_da_expulsao[7]
 #--------------------
-
+##ESTATISTICAS
+jogo = jogo[:-5]
+r = requests.get(jogo)
+soup = BeautifulSoup(r.content, 'html.parser')
 
 classificacao = soup.find('table', class_="results")
-print(classificacao)
+
+##VARIÁVEIS
+#--------------------
+#posicao dos times no campeonato
+posicao_atual_time_mandante = classificacao.find("tr", {"style":"background-color: #CDDFF0"}).find('td').get_text().strip()
+posicao_atual_time_visitante = classificacao.find("tr", {"style":"background-color: #FFE0A6"}).find('td').get_text().strip()
+#--------------------
+print(posicao_atual_time_mandante)
+print(posicao_atual_time_visitante)
+
+
+
 
 
 
